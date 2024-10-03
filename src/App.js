@@ -164,7 +164,7 @@ function App() {
 
 
   return (
-    <body>
+    <div>
       {showSurvey ? (
         <div className="survey-container">
           <h2>Survey</h2>
@@ -185,12 +185,17 @@ function App() {
           )}
         </div>
       ) : (
-        <>
+        <body>
           <div className="sidebar">
-            <h3>Scenario Preface</h3>
+            <h3>Scenario</h3>
             <p id="scenario-preface">
               {currentScenario ? currentScenario.preface : "Loading scenario..."}
             </p>
+            {showNextButton && (
+                <button className="next-button" onClick={handleNextClick}>
+                  Next
+                </button>
+              )}
           </div>
           <div className="app-container">
             <div className="phone-top"></div>
@@ -241,18 +246,12 @@ function App() {
                 />
                 <button onClick={handleUserInput}>Send</button>
               </div>
-
-              {showNextButton && (
-                <button className="next-button" onClick={handleNextClick}>
-                  Next
-                </button>
-              )}
             </div>
             <div className="phone-bottom"></div>
           </div>
-        </>
+        </body>
       )}
-    </body>
+    </div>
   );
 }
 

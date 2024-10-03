@@ -1,20 +1,56 @@
 /* Body and overall layout */
 /* Overall page layout */
+/* Centering the survey */
+.survey-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height to center vertically */
+  width: 100vw;  /* Full width to center horizontally */
+  text-align: center;
+}
+
+/* Optional: Add padding or styling to the survey container */
+.survey-container h2 {
+  margin-bottom: 10px;
+}
+
+.survey-container iframe {
+  border: 2px solid #ddd; /* Optional: Add border to the iframe */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+
+/* Optional: Style the complete survey button */
+.survey-container button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.survey-container button:hover {
+  background-color: #0056b3;
+}
+
 body {
   display: flex; /* Use flexbox to align sidebar and phone */
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100vh;
   margin: 0;
+  padding-left: 225px;
   background-color: #e0e0e0;
 }
 
 /* Sidebar container */
 .sidebar {
   width: 300px; /* Set the width of the sidebar */
-  height: 25%; /* Match the phone's height */
+  height: flex; /* Make the sidebar fill the full height of the viewport */
   background-color: #f8f9fa;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   margin-right: 20px; /* Spacing between sidebar and phone */
@@ -45,12 +81,13 @@ body {
   align-items: center;
   background: radial-gradient(circle, #d8dee9, #4c566a);
   overflow: hidden;
+  position: relative;
 }
 
 /* Phone screen inside the phone body with fixed size */
 .phone-screen {
-  width: 360px; /* Fixed width of the screen */
-  height: 640px; /* Fixed height of the screen */
+  width: 100%; /* Fill the phone body width */
+  height: 80%; /* Adjust to fit the height within the phone body */
   background-color: white;
   border-radius: 30px; /* Rounded screen edges */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
@@ -70,8 +107,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-top: 50px; /* Adjust to position it lower within the phone */
-  margin-bottom: 50px; /* Adjust to avoid overlapping the phone bottom */
+  margin: 50px 0; /* Adjust to position it within the phone */
 }
 
 /* Message bubbles */
@@ -128,7 +164,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-.next-button{
+.next-button {
   margin-left: 0%;
 }
 
@@ -140,40 +176,33 @@ button:hover {
 .messages {
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
   scrollbar-width: none; /* For Firefox */
-    padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
-    background-color: #fafafa;
-    border-radius: 20px; /* Rounding the corners of the messages area */
-    display: flex;
-    flex-direction: column;
-  
-}
-
-
-.message.typing-indicator {
-  font-style: italic;
-  color: #777;
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #fafafa;
+  border-radius: 20px; /* Rounding the corners of the messages area */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Phone top and bottom adjusted to fit within the phone body */
 .phone-top {
   position: absolute;
-  top: 72px; /* Adjusted to stay near the top */
-  width: 60px;
+  top: 2.5%; /* Adjusted to stay relative to the top */
+  width: 60px; /* Scales with phone width */
   height: 5px;
   background-color: #333;
   border-radius: 5px;
-  left: 59.5%;
+  left: 50%;
   transform: translateX(-50%);
 }
 
 .phone-front-camera {
   position: absolute;
-  top: 79px; /* Aligned with the phone-top element */
-  left: 59.5%;
+  top: 3.75%; /* Aligned with the phone-top element */
+  left: 50%;
   transform: translateX(-50%);
-  width: 8px;
+  width: 8px; /* Scales with phone width */
   height: 8px;
   background-color: #333;
   border-radius: 50%;
@@ -181,22 +210,22 @@ button:hover {
 
 .phone-speaker {
   position: absolute;
-  top: 90px; /* Aligned just above the screen */
-  width: 40px;
+  top: 5.5%; /* Aligned just above the screen */
+  width: 40px; /* Scales with phone width */
   height: 4px;
   background-color: #333;
   border-radius: 2px;
-  left: 59.5%;
+  left: 50%;
   transform: translateX(-50%);
 }
 
 .phone-bottom {
   position: absolute;
-  bottom: 65px; /* Aligned with the phone-top element */
-  left: 59.5%;
+  bottom: 1%; /* Aligned with the phone-top element */
+  left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  width: 40px; /* Scales with phone width */
+  height: 40px; /* Scales with phone height */
   background-color: #333;
   border-radius: 50%;
 }
@@ -217,8 +246,6 @@ button:hover {
   border-radius: 50%;
   margin-right: 10px;
   object-fit: cover;
-  transform: scale(1);
-  transform-origin: center;
 }
 
 .contact-bar .contact-name {
@@ -236,4 +263,42 @@ button:hover {
   padding: 5px;
   font-weight: bold;
   font-size: 14px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .app-container {
+    width: 300px;
+    height: 650px;
+  }
+
+  .phone-screen {
+    height: 75%;
+  }
+
+  .phone-top,
+  .phone-front-camera,
+  .phone-speaker,
+  .phone-bottom {
+    width: 10%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    width: 240px;
+    height: 500px;
+  }
+
+  .phone-screen {
+    height: 70%;
+  }
+
+  .phone-top,
+  .phone-front-camera,
+  .phone-speaker,
+  .phone-bottom {
+    width: 8%;
+  }
 }
