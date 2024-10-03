@@ -1,0 +1,239 @@
+/* Body and overall layout */
+/* Overall page layout */
+body {
+  display: flex; /* Use flexbox to align sidebar and phone */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #e0e0e0;
+}
+
+/* Sidebar container */
+.sidebar {
+  width: 300px; /* Set the width of the sidebar */
+  height: 25%; /* Match the phone's height */
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  margin-right: 20px; /* Spacing between sidebar and phone */
+  border-radius: 20px; /* Add some border radius */
+}
+
+/* Sidebar content styles */
+.sidebar h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.sidebar p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Phone container */
+.app-container {
+  width: 360px; /* Keep the phone width */
+  height: 800px; /* Match the height */
+  background: #f0f0f0;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #d8dee9, #4c566a);
+  overflow: hidden;
+}
+
+/* Phone screen inside the phone body with fixed size */
+.phone-screen {
+  width: 360px; /* Fixed width of the screen */
+  height: 640px; /* Fixed height of the screen */
+  background-color: white;
+  border-radius: 30px; /* Rounded screen edges */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Screen area inside the phone */
+.chat-window {
+  width: 90%; /* Fill more of the phone body horizontally */
+  height: 85%; /* Adjust to fill the vertical space inside the red rectangle */
+  background-color: white;
+  border-radius: 20px; /* Round the edges slightly */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 50px; /* Adjust to position it lower within the phone */
+  margin-bottom: 50px; /* Adjust to avoid overlapping the phone bottom */
+}
+
+/* Message bubbles */
+.message {
+  padding: 10px 15px;
+  border-radius: 20px; /* Increase to make the corners more rounded */
+  margin-bottom: 10px;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  background-color: #d1e7dd;
+  align-self: flex-end;
+  border-bottom-right-radius: 5px; /* Optional: Different radius for one corner */
+}
+
+.message.bot {
+  background-color: #e2e3e5;
+  align-self: flex-start;
+  border-bottom-left-radius: 5px; /* Optional: Different radius for one corner */
+}
+
+/* Input area at the bottom of the chat window */
+.input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f8f9fa;
+}
+
+input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px; /* Rounded input field */
+  font-size: 16px;
+  outline: none;
+  background-color: #eef1f4; /* Slightly grey background for input field */
+}
+
+button {
+  margin-left: 8px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px; /* Rounded button */
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.next-button{
+  margin-left: 0%;
+}
+
+/* Hide the scroll bar */
+.messages::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.messages {
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #fafafa;
+    border-radius: 20px; /* Rounding the corners of the messages area */
+    display: flex;
+    flex-direction: column;
+  
+}
+
+
+.message.typing-indicator {
+  font-style: italic;
+  color: #777;
+}
+
+/* Phone top and bottom adjusted to fit within the phone body */
+.phone-top {
+  position: absolute;
+  top: 72px; /* Adjusted to stay near the top */
+  width: 60px;
+  height: 5px;
+  background-color: #333;
+  border-radius: 5px;
+  left: 59.5%;
+  transform: translateX(-50%);
+}
+
+.phone-front-camera {
+  position: absolute;
+  top: 79px; /* Aligned with the phone-top element */
+  left: 59.5%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+.phone-speaker {
+  position: absolute;
+  top: 90px; /* Aligned just above the screen */
+  width: 40px;
+  height: 4px;
+  background-color: #333;
+  border-radius: 2px;
+  left: 59.5%;
+  transform: translateX(-50%);
+}
+
+.phone-bottom {
+  position: absolute;
+  bottom: 65px; /* Aligned with the phone-top element */
+  left: 59.5%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+/* Contact bar at the top of the message screen */
+.contact-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f1f1f1;
+  border-radius: 20px 20px 0 0;
+}
+
+.contact-bar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  transform: scale(1);
+  transform-origin: center;
+}
+
+.contact-bar .contact-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.choices-area {
+  padding: 10px;
+  background-color: #f8f9fa;
+  margin-bottom: 10px;
+}
+
+.choice-option {
+  padding: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
