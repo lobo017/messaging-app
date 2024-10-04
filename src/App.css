@@ -45,6 +45,24 @@ body {
   background-color: #e0e0e0;
 }
 
+.choices-area {
+  padding: 20px 20px 20px 20px;
+  width: 300px;
+  height: flex;
+  background-color: #f8f9fa;
+  margin-bottom: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: 20px; /* Spacing between sidebar and phone */
+  border-radius: 20px; /* Add some border radius */
+}
+
+.choice-option {
+  padding: 5px;
+  width: flex;
+  font-weight: bold;
+  font-size: 14px;
+}
+
 /* Sidebar container */
 .sidebar {
   width: 300px; /* Set the width of the sidebar */
@@ -253,17 +271,6 @@ button:hover {
   font-weight: bold;
 }
 
-.choices-area {
-  padding: 10px;
-  background-color: #f8f9fa;
-  margin-bottom: 10px;
-}
-
-.choice-option {
-  padding: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}
 
 /* Media queries for responsive design */
 @media (max-width: 768px) {

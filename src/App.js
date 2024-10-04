@@ -227,18 +227,6 @@ function App() {
                 <div ref={messagesEndRef} /> {/* Empty div for scrolling */}
               </div>
 
-              <div className="choices-area">
-                {choices.length > 0 && (
-                  <div className="choice-prompt">
-                    {choices.map((choice, index) => (
-                      <div key={index} className="choice-option">
-                        {choice.label}: {choice.text}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
               <div className="input-area">
                 <input
                   type="text"
@@ -249,9 +237,21 @@ function App() {
                 />
                 <button onClick={handleUserInput}>Send</button>
               </div>
+              
             </div>
             <div className="phone-bottom"></div>
           </div>
+          <div className="choices-area">
+                {choices.length > 0 && (
+                  <div className="choice-prompt">
+                    {choices.map((choice, index) => (
+                      <div key={index} className="choice-option">
+                        {choice.label}: {choice.text}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
         </body>
       )}
 //     </div>
