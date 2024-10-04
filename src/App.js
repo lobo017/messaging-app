@@ -142,49 +142,52 @@ function App() {
   // Extract the first word of the preface to use as the contact name
   const contactName = currentScenario ? currentScenario.preface.split(" ")[0] : "Friend";
 
-  useEffect(() => {
-    // Function to handle messages from the iframe
-    const handleMessage = (event) => {
-      // Check the origin of the message for security
-      if (event.origin === "https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk") {
-        if (event.data === "surveyComplete") {
-          setSurveyComplete(true); // Update state when survey is complete
-        }
-      }
-    };
+//   useEffect(() => {
+//     if (typeof window !== "undefined") {
+//         const handleMessage = (event) => {
+//             // Check the origin of the message for security
+//             if (event.origin === "https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk") {
+//                 if (event.data === "") {
+//                     setSurveyComplete(true); // Update state when survey is complete
+//                     setShowSurvey(false); // Optionally hide the survey
+//                 }
+//             }
+//         };
 
-    // Add event listener for message events
-    window.addEventListener("message", handleMessage);
+//         // Add event listener for message events
+//         window.addEventListener("message", handleMessage);
 
-    // Cleanup function to remove the event listener
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
+//         // Cleanup function to remove the event listener
+//         return () => {
+//             window.removeEventListener("message", handleMessage);
+//         };
+//     }
+// }, []);
+
 
 
   return (
-    <div>
-      {showSurvey ? (
-        <div className="survey-container">
-          <h2>Survey</h2>
-          <p>Please fill out the survey below:</p>
-          <iframe
-            src="https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk"
-            width="400px"
-            height="600px"
-            style={{ border: 'none' }}
-            title="Survey"
-          />
-          {surveyComplete ? (
-            <button onClick={() => setShowSurvey(false)} style={{ marginTop: '20px' }}>
-              Complete Survey
-            </button>
-          ) : (
-            <p>Please complete the survey to proceed.</p>
-          )}
-        </div>
-      ) : (
+    // <div>
+    //   {showSurvey ? (
+    //     <div className="survey-container">
+    //       <h2>Survey</h2>
+    //       <p>Please fill out the survey below:</p>
+    //       <iframe
+    //         src="https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk"
+    //         width="400px"
+    //         height="600px"
+    //         style={{ border: 'none' }}
+    //         title="Survey"
+    //       />
+    //       {surveyComplete ? (
+    //         <button onClick={() => setShowSurvey(false)} style={{ marginTop: '20px' }}>
+    //           Complete Survey
+    //         </button>
+    //       ) : (
+    //         <p>Please complete the survey to proceed.</p>
+    //       )}
+    //     </div>
+    //   ) : (
         <body>
           <div className="sidebar">
             <h3>Scenario</h3>
@@ -251,8 +254,8 @@ function App() {
           </div>
         </body>
       )}
-    </div>
-  );
-}
+//     </div>
+//   );
+// }
 
 export default App;
