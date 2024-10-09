@@ -8,8 +8,7 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false);
-  const [showSurvey, setShowSurvey] = useState(true); // State to track survey visibility
-  const [surveyComplete, setSurveyComplete] = useState(false); // Track survey completion
+  const [inputDisabled, setInputDisabled] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Predefined bot responses with options for each scenario
@@ -80,6 +79,7 @@ function App() {
       setMessages([botMessage]); // Initialize the scenario with the first message
       setChoices(currentScenario.options); // Show initial options for this scenario
       setShowNextButton(false); // Hide the "Next" button when a new scenario starts
+      setInputDisabled(false); // Enable input when a new scenario starts
     }
   }, [currentScenario]);
 
@@ -90,6 +90,7 @@ function App() {
   }, [messages, startScenario, currentScenario]);
 
   const handleUserInput = () => {
+    setInputDisabled(true); // Disable input field
     const userInput = input.trim().toLowerCase();
     const selectedChoice = choices.find(choice => choice.label === userInput);
 
@@ -102,9 +103,9 @@ function App() {
         const botMessage = { sender: 'bot', text: selectedChoice.response };
         setMessages(prevMessages => [...prevMessages, botMessage]);
         setIsTyping(false);
-
-        // Show the "Next" button after a response
-        setShowNextButton(true);
+        setChoices([]); // Hide the choices after bot responds
+        setShowNextButton(true); // Show the "Next" button after a response
+        setInput("Click Next"); // Set placeholder to "Click Next"
       }, 1500); // Delay bot response
     }
 
@@ -117,6 +118,8 @@ function App() {
       if (nextIndex < scenarios.length) {
         setMessages([]); // Clear messages for the next scenario
         setChoices([]);  // Clear choices for the next scenario
+        setInput(""); // Clear input field
+        setInputDisabled(false); // Enable input for new scenario
         return nextIndex; // Move to the next scenario
       }
       return prevIndex;
@@ -142,120 +145,83 @@ function App() {
   // Extract the first word of the preface to use as the contact name
   const contactName = currentScenario ? currentScenario.preface.split(" ")[0] : "Friend";
 
-//   useEffect(() => {
-//     if (typeof window !== "undefined") {
-//         const handleMessage = (event) => {
-//             // Check the origin of the message for security
-//             if (event.origin === "https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk") {
-//                 if (event.data === "") {
-//                     setSurveyComplete(true); // Update state when survey is complete
-//                     setShowSurvey(false); // Optionally hide the survey
-//                 }
-//             }
-//         };
-
-//         // Add event listener for message events
-//         window.addEventListener("message", handleMessage);
-
-//         // Cleanup function to remove the event listener
-//         return () => {
-//             window.removeEventListener("message", handleMessage);
-//         };
-//     }
-// }, []);
-
-
 
   return (
-    // <div>
-    //   {showSurvey ? (
-    //     <div className="survey-container">
-    //       <h2>Survey</h2>
-    //       <p>Please fill out the survey below:</p>
-    //       <iframe
-    //         src="https://utdallas.qualtrics.com/jfe/form/SV_dmLaKWf4cQIQqXk"
-    //         width="400px"
-    //         height="600px"
-    //         style={{ border: 'none' }}
-    //         title="Survey"
-    //       />
-    //       {surveyComplete ? (
-    //         <button onClick={() => setShowSurvey(false)} style={{ marginTop: '20px' }}>
-    //           Complete Survey
-    //         </button>
-    //       ) : (
-    //         <p>Please complete the survey to proceed.</p>
-    //       )}
-    //     </div>
-    //   ) : (
-        <body>
-          <div className="sidebar">
-            <h3>Scenario</h3>
-            <p id="scenario-preface">
-              {currentScenario ? currentScenario.preface : "Loading scenario..."}
-            </p>
-            {showNextButton && (
-                <button className="next-button" onClick={handleNextClick}>
-                  Next
-                </button>
-              )}
-          </div>
-          <div className="app-container">
-            <div className="phone-top"></div>
-            <div className="phone-front-camera"></div>
-            <div className="phone-speaker"></div>
-
-            <div className="chat-window">
-              <div className="contact-bar">
-                <img src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=" alt="Contact" />
-                <div className="contact-name">{contactName}</div> {/* Display dynamic contact name */}
-              </div>
-
-              <div className="messages">
-                {messages.map((msg, index) => (
-                  <div key={index} className={`message ${msg.sender}`}>
-                    {msg.text}
-                  </div>
-                ))}
-
-                {isTyping && (
-                  <div className="message bot typing-indicator">
-                    <span>Typing...</span>
-                  </div>
-                )}
-
-                <div ref={messagesEndRef} /> {/* Empty div for scrolling */}
-              </div>
-
-              <div className="input-area">
-                <input
-                  type="text"
-                  placeholder="Enter a letter (a, b, c...)"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                />
-                <button onClick={handleUserInput}>Send</button>
-              </div>
-              
+    <body>
+      <div className="container">
+        {/* Scenario Sidebar */}
+        <div className="sidebar">
+          <h3>Scenario</h3>
+          <p id="scenario-preface">
+            {currentScenario ? currentScenario.preface : "Loading scenario..."}
+          </p>
+          {showNextButton && (
+            <button className="next-button" onClick={handleNextClick}>
+              Next
+            </button>
+          )}
+        </div>
+        
+        {/* Phone Container */}
+        <div className="app-container">
+          <div className="phone-top"></div>
+          <div className="phone-front-camera"></div>
+          <div className="phone-speaker"></div>
+  
+          <div className="chat-window">
+            <div className="contact-bar">
+              <img src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=" alt="Contact" />
+              <div className="contact-name">{contactName}</div> {/* Display dynamic contact name */}
             </div>
-            <div className="phone-bottom"></div>
+  
+            <div className="messages">
+              {messages.map((msg, index) => (
+                <div key={index} className={`message ${msg.sender}`}>
+                  {msg.text}
+                </div>
+              ))}
+  
+              {isTyping && (
+                <div className="message bot typing-indicator">
+                  <span>Typing...</span>
+                </div>
+              )}
+  
+              <div ref={messagesEndRef} /> {/* Empty div for scrolling */}
+            </div>
+  
+            <div className="input-area">
+              <input
+                type="text"
+                placeholder={inputDisabled ? "Click Next" : "Enter a letter (a, b, c...)"}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyPress}
+                disabled={inputDisabled} // Disable input based on state
+              />
+              <button onClick={handleUserInput} disabled={inputDisabled}>
+                Send
+              </button>
+            </div>
+            
           </div>
-          <div className="choices-area">
-                {choices.length > 0 && (
-                  <div className="choice-prompt">
-                    {choices.map((choice, index) => (
-                      <div key={index} className="choice-option">
-                        {choice.label}: {choice.text}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-        </body>
-      )}
-//     </div>
-//   );
-// }
-
-export default App;
+          <div className="phone-bottom"></div>
+        </div>
+  
+        {/* Choices Box */}
+        <div className="choices-area">
+          {choices.length > 0 && !inputDisabled && (
+            <div className="choice-prompt">
+              {choices.map((choice, index) => (
+                <div key={index} className="choice-option">
+                  {choice.label}: {choice.text}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </body>
+  );
+}
+ export default App;  
