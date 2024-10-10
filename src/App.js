@@ -90,11 +90,11 @@ function App() {
   }, [messages, startScenario, currentScenario]);
 
   const handleUserInput = () => {
-    setInputDisabled(true); // Disable input field
     const userInput = input.trim().toLowerCase();
     const selectedChoice = choices.find(choice => choice.label === userInput);
 
     if (selectedChoice) {
+      setInputDisabled(true); // Disable input field
       const userMessage = { sender: 'user', text: selectedChoice.text };
       setMessages(prevMessages => [...prevMessages, userMessage]);
       setIsTyping(true);
