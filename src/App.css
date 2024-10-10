@@ -113,7 +113,7 @@ body {
 }
 
 .message.user {
-  background-color: #d1e7dd;
+  background-color: #D1E7FF;
   align-self: flex-end;
   border-bottom-right-radius: 5px; /* Optional: Different radius for one corner */
 }
